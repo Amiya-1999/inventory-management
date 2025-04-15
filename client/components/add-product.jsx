@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import axios from "axios";
+import { useAuth } from "@/app/context/AuthContext";
 
 const categories = [
   "FruitsAndVegetables",
@@ -12,6 +13,7 @@ const categories = [
 ];
 
 const AddProductModal = ({ isOpen, onClose, onProductAdded }) => {
+  const { setSidebarOpen } = useAuth();
   const [form, setForm] = useState({
     name: "",
     description: "",
@@ -25,9 +27,9 @@ const AddProductModal = ({ isOpen, onClose, onProductAdded }) => {
   };
 
   const handleSubmit = async () => {
-    if(form.name === "" || form.quantity === "") {
-        alert("Name and Quantity are required fields.");
-        return;
+    if (form.name === "" || form.quantity === "") {
+      alert("Name and Quantity are required fields.");
+      return;
     }
     try {
       const payload = {
@@ -54,7 +56,7 @@ const AddProductModal = ({ isOpen, onClose, onProductAdded }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+    <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 pt-40 md:mt-0 overflow-auto">
       <div className="bg-white rounded-xl shadow-xl w-full max-w-md p-6 relative">
         <button
           className="absolute top-2 right-3 text-gray-500 text-xl"
@@ -109,7 +111,10 @@ const AddProductModal = ({ isOpen, onClose, onProductAdded }) => {
             required
           />
           <button
-            onClick={handleSubmit}
+            onClick={() => {
+              handleSubmit();
+              setSidebarOpen(false);
+            }}
             className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 cursor-pointer"
           >
             Save Product

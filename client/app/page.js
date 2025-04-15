@@ -48,7 +48,8 @@ const HomePage = () => {
         onSelect={handleSelect}
         isLoggedIn={isLoggedIn}
       />
-      <main className="ml-64 mt-20 p-6 w-full bg-gray-50 min-h-screen">
+
+      <main className={`md:ml-64 mt-20 p-6 w-full bg-gray-50 min-h-screen`}>
         <h1 className="text-2xl font-bold mb-6">
           {selected === "all"
             ? "All Products"

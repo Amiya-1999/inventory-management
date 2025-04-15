@@ -1,32 +1,41 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { User2 } from "lucide-react";
+import { Menu, User2 } from "lucide-react";
 import Link from "next/link";
 import { useAuth } from "@/app/context/AuthContext";
 import { usePathname } from "next/navigation";
 
 const Header = () => {
-  const { user } = useAuth();
+  const { user, setSidebarOpen } = useAuth();
   const pathname = usePathname();
   const isActive = pathname === "/";
 
   return (
     <header className="fixed top-0 w-full z-50 bg-white/70 backdrop-blur-md shadow-sm">
       <nav className="container mx-auto px-4 py-3 flex items-center justify-between">
-        <Link
-          href="/"
-          className="text-2xl font-bold text-blue-600 tracking-wide hover:opacity-90 transition"
-        >
-          Digi<span className="text-gray-800">Dukaan</span>
-        </Link>
+        <div className="flex items-center gap-4">
+          <button
+            className="md:hidden text-gray-700 hover:text-blue-600"
+            onClick={() => setSidebarOpen((prev) => !prev)}
+            aria-label="Toggle Sidebar"
+          >
+            <Menu className="w-6 h-6" />
+          </button>
+          <Link
+            href="/"
+            className="text-2xl font-bold text-blue-600 tracking-wide hover:opacity-90 transition"
+          >
+            Digi<span className="text-gray-800">Dukaan</span>
+          </Link>
+        </div>
 
         <div className="flex items-center space-x-6">
           {user ? (
             <>
               <Link
                 href="/"
-                className={`relative transition duration-300 font-medium group ${
+                className={`relative transition duration-300 font-medium group hidden md:block ${
                   isActive
                     ? "text-blue-600"
                     : "text-gray-700 hover:text-blue-600"

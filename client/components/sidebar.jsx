@@ -1,3 +1,4 @@
+import { useAuth } from "@/app/context/AuthContext";
 import Link from "next/link";
 
 const categories = [
@@ -10,8 +11,13 @@ const categories = [
 ];
 
 const Sidebar = ({ selected, onSelect, isLoggedIn }) => {
+  const { sidebarOpen, setSidebarOpen } = useAuth();
   return (
-    <aside className="w-64 h-full bg-white border-r shadow-md p-4 fixed top-16 left-0">
+    <aside
+      className={`w-64 h-full bg-white border-r shadow-md p-4 fixed top-16 left-0 ${
+        sidebarOpen ? "block z-50" : "hidden"
+      } md:block`}
+    >
       <button
         disabled={!isLoggedIn}
         title={!isLoggedIn ? "Login to Add" : ""}
@@ -31,7 +37,7 @@ const Sidebar = ({ selected, onSelect, isLoggedIn }) => {
                 ? "bg-blue-100 font-semibold"
                 : "hover:bg-gray-100"
             }`}
-            onClick={() => onSelect(cat.value)}
+            onClick={() => {onSelect(cat.value); setSidebarOpen(false);}}
           >
             {cat.label}
           </button>
