@@ -13,8 +13,9 @@ const HomePage = () => {
   const [showModal, setShowModal] = useState(false);
 
   const fetchProducts = async (category) => {
+    const apiUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
     try {
-      const res = await axios.get("http://localhost:8000/api/products");
+      const res = await axios.get(`${apiUrl}/api/products`);
       const data = res.data.products || [];
       setProducts(
         category && category !== "all"

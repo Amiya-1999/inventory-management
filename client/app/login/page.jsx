@@ -13,6 +13,8 @@ const LoginPage = () => {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
+  const apiUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+
   const handleChange = (e) =>
     setForm({ ...form, [e.target.name]: e.target.value });
 
@@ -23,7 +25,7 @@ const LoginPage = () => {
     try {
         console.log(form);
       if (isLogin) {
-        const res = await axios.post("http://localhost:8000/api/users/login", {
+        const res = await axios.post(`${apiUrl}/api/users/login`, {
           email: form.email,
           password: form.password,
         });
@@ -32,7 +34,7 @@ const LoginPage = () => {
         alert("Login successful");
         router.push("/");
       } else {
-        await axios.post("http://localhost:8000/api/users/register", {
+        await axios.post(`${apiUrl}/api/users/register`, {
           name: form.name,
           email: form.email,
           password: form.password,

@@ -22,6 +22,8 @@ const AddProductModal = ({ isOpen, onClose, onProductAdded }) => {
     quantity: "",
   });
 
+  const apiUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
@@ -38,7 +40,7 @@ const AddProductModal = ({ isOpen, onClose, onProductAdded }) => {
         quantity: parseFloat(form.quantity),
       };
 
-      await axios.post("http://localhost:8000/api/products", payload);
+      await axios.post(`${apiUrl}/api/products`, payload);
       onProductAdded();
       onClose();
       setForm({

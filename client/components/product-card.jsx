@@ -7,11 +7,13 @@ const ProductCard = ({ product, isLoggedIn, refreshProducts }) => {
   const [newQty, setNewQty] = useState(product.quantity);
   const [loading, setLoading] = useState(false);
 
+  const apiUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+
   const handleUpdate = async () => {
     try {
       setLoading(true);
       await axios.put(
-        `http://localhost:8000/api/products/${product.id}/quantity`,
+        `${apiUrl}/api/products/${product.id}/quantity`,
         {
           quantity: parseFloat(newQty),
         }
@@ -29,7 +31,7 @@ const ProductCard = ({ product, isLoggedIn, refreshProducts }) => {
     if (!confirm("Are you sure you want to delete this product?")) return;
     try {
       setLoading(true);
-      await axios.delete(`http://localhost:8000/api/products/${product.id}`);
+      await axios.delete(`${apiUrl}/api/products/${product.id}`);
       refreshProducts();
     } catch (err) {
       console.error("Failed to delete product:", err.message);
